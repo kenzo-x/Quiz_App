@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クイズオーバーレイ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/overlay.css') }}">
+</head>
+<body class="page overlay-page" data-auto-init="true">
+  <div class="video-frame">
+    <video id="camera" autoplay playsinline muted></video>
+    <div class="camera-status" id="camera-status">カメラを初期化中...</div>
+    <div class="overlay-ui">
+      <div class="quiz-container compact">
+        <header class="quiz-header">
+          <div>
+            <p class="app-title">Overlay Quiz</p>
+            <p class="app-subtitle">カメラ＋テロップ風UI</p>
+          </div>
+          <div class="quiz-selector">
+            <label id="quiz-select-label" for="quiz-select">クイズファイル</label>
+            <select id="quiz-select"></select>
+          </div>
+          <div class="status">
+            <span id="progress">0 / 0</span>
+            <span id="score">Score: 0</span>
+          </div>
+        </header>
+
+        <section class="question-card glassy">
+          <div class="question-text" id="question-text">読み込み中...</div>
+          <div class="choices" id="choices">
+            <button class="choice-btn" data-choice="1">選択肢1</button>
+            <button class="choice-btn" data-choice="2">選択肢2</button>
+            <button class="choice-btn" data-choice="3">選択肢3</button>
+            <button class="choice-btn" data-choice="4">選択肢4</button>
+          </div>
+          <div class="result" id="result"></div>
+          <div class="explanation" id="explanation"></div>
+          <div class="controls">
+            <button id="next-btn" disabled>次の問題へ</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div class="overlay-footer">
+    <label class="toggle">
+      <input type="checkbox" id="gamepad-toggle">
+      <span>ゲームパッド入力を有効化</span>
+    </label>
+    <div class="gamepad-status" id="gamepad-status">Gamepad: OFF</div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/gamepad.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/overlay.js') }}"></script>
+</body>
+</html>

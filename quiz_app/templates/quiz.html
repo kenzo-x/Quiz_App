@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>クイズ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+</head>
+<body class="page quiz-page" data-auto-init="true">
+  <main class="quiz-container">
+    <header class="quiz-header">
+      <div>
+        <p class="app-title">Quiz Engine MVP</p>
+        <p class="app-subtitle">Excel読み込み / 即時判定 / 解説表示</p>
+      </div>
+      <div class="quiz-selector">
+        <label id="quiz-select-label" for="quiz-select">クイズファイル</label>
+        <select id="quiz-select"></select>
+      </div>
+      <div class="status">
+        <span id="progress">0 / 0</span>
+        <span id="score">Score: 0</span>
+      </div>
+    </header>
+
+    <section class="question-card">
+      <div class="question-text" id="question-text">読み込み中...</div>
+      <div class="choices" id="choices">
+        <button class="choice-btn" data-choice="1">選択肢1</button>
+        <button class="choice-btn" data-choice="2">選択肢2</button>
+        <button class="choice-btn" data-choice="3">選択肢3</button>
+        <button class="choice-btn" data-choice="4">選択肢4</button>
+      </div>
+      <div class="result" id="result"></div>
+      <div class="explanation" id="explanation"></div>
+      <div class="controls">
+        <button id="next-btn" disabled>次の問題へ</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer-note">ゲームパッド入力・テレビ風オーバーレイは /overlay で確認できます。</p>
+    </footer>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+</body>
+</html>
