@@ -23,13 +23,29 @@ class QuizEngine:
 
     @classmethod
     def load_from_excel(cls, path: str) -> "QuizEngine":
-        required_cols = ["id", "question", "choice1", "choice2", "choice3", "choice4", "answer", "explanation"]
         try:
             df = pd.read_excel(path)
         except FileNotFoundError as exc:
             raise FileNotFoundError(f"Excelファイルが見つかりません: {path}") from exc
         except Exception as exc:  # pragma: no cover - defensive
             raise RuntimeError(f"Excel読み込みに失敗しました: {exc}") from exc
+
+        return cls._from_dataframe(df)
+
+    @classmethod
+    def load_from_csv(cls, path: str, *, encoding: str | None = None) -> "QuizEngine":
+        try:
+            df = pd.read_csv(path, encoding=encoding)
+        except FileNotFoundError as exc:
+            raise FileNotFoundError(f"CSVファイルが見つかりません: {path}") from exc
+        except Exception as exc:  # pragma: no cover - defensive
+            raise RuntimeError(f"CSV読み込みに失敗しました: {exc}") from exc
+
+        return cls._from_dataframe(df)
+
+    @classmethod
+    def _from_dataframe(cls, df: pd.DataFrame) -> "QuizEngine":
+        required_cols = ["id", "question", "choice1", "choice2", "choice3", "choice4", "answer", "explanation"]
 
         missing = [c for c in required_cols if c not in df.columns]
         if missing:
