@@ -1,5 +1,6 @@
 import os
 import random
+import sys
 from pathlib import Path
 from typing import Dict, Any, List
 
@@ -12,8 +13,22 @@ from quiz_engine import QuizEngine
 # pip install -r requirements.txt
 # flask run もしくは python app.py で起動し /quiz /overlay にアクセス
 
-BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data"
+def _resource_base_dir() -> Path:
+    if getattr(sys, "frozen", False):
+        return Path(getattr(sys, "_MEIPASS", Path(sys.executable).resolve().parent))
+    return Path(__file__).resolve().parent
+
+
+def _data_dir() -> Path:
+    if getattr(sys, "frozen", False):
+        exe_dir = Path(sys.executable).resolve().parent
+        if (exe_dir / "data").exists():
+            return exe_dir / "data"
+    return _resource_base_dir() / "data"
+
+
+BASE_DIR = _resource_base_dir()
+DATA_DIR = _data_dir()
 
 SECRET_KEY = os.getenv("SECRET_KEY") or os.urandom(24)
 RANDOMIZE_ORDER = os.getenv("QUIZ_RANDOMIZE", "false").lower() == "true"

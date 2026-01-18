@@ -37,6 +37,38 @@ python app.py
 
 アプリケーションが起動したら、ブラウザで http://localhost:5000 にアクセスしてください。
 
+## Windows向けexe化（PyInstaller）
+
+### 前提
+- Windows環境
+- Python 3.x
+
+### 手順
+
+1. 仮想環境の作成と有効化:
+```bat
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+2. 依存パッケージのインストール:
+```bat
+pip install -r requirements.txt
+pip install pyinstaller
+```
+
+3. exeビルド:
+```bat
+pyinstaller --noconsole --add-data "templates;templates" --add-data "static;static" --add-data "data;data" app.py
+```
+
+4. 起動:
+`dist\app\app.exe` を起動し、ブラウザで http://localhost:5200 にアクセスしてください。
+
+### 補足
+- `dist\app\data` にあるExcelが優先的に読み込まれます。
+- 単一exeにしたい場合は `--onefile` を追加できますが、`data` の差し替え運用なら one-dir の方が扱いやすいです。
+
 ## プロジェクト構成
 
 ```
